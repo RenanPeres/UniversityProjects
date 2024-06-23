@@ -1,0 +1,18 @@
+Hiago De Franco Moreira - 9771289
+
+Exercise 1: Hello World bare metal
+
+- Have you managed to build and test the software?
+
+- Have you managed to reproduce the examples?
+
+- Has there been any issue during build, boot?
+
+- If so, have you managed to solve it? How?
+
+
+	No começo tive dificuldade para rodar o ¨./configure¨, pois algumas dependências que eu precisava eu não tinha instaladas, e achei o feedback de quais pacotes eu precisava um pouco ruim. Porém pelo README consegui instalar depois o que precisava e usar o make para construir os arquivos necessários. 
+	Depois consegui rodar o make dentro da pasta hw em syseg/eg/ e gerar os arquivos .bin necessários. Comparandos os aqruivos eg-01.bin e eg-02.bin pude confirmar que, de fato, ele representavam a mesma coisa. 
+	Com o comando ¨make run IMG=nome.bin¨ inicialmente tive um problema, pois não tinhao o ¨qemu-system-i386¨ instalado e também este pacote não estava listado no apt. Procurando rapidament e no stackoverflow, descobri que precisava na verdade instalar o qemu-system-x86 para ter acesso ao pacote do i386. Feito isso, tudo certo, consegui rodar e bootar no emulador sem problema nenhum.
+	Não prossegui para o boot com o pen drive, pois aqui só possuo um HD externo para utilizar como pen drive e não poderia formá-lo para testar o boot real. Me contive apenas com o emulador.
+

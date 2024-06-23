@@ -1,0 +1,5 @@
+Renan Peres Martins - 10716612
+
+	-Inicialmente, criei os arquivos binários para os exemplos (utilizando do programa hex2bin e por meio do nasm, respectivamnte) etestei âmbos por meio do qemu -> Âmbos os testes foram bem suceedidos e bootaram corretamente;
+	-Em seguida, recriei os códigos fontes vistos em aula e novamente transformei em arquivos binários e testei no qemu -> Novamente sucesso no procedimento sem nenhuma adversidade (fora erros de atenção que não prejudicam a execução, como no arquivo em hexa - escrito diretamente em bytes, eu acabei esquecendo um 'l' no 'hello');
+	-Por fim, anexei em um pen drive o arquivo binário proveniente do código em assembly escrito por mim e tentei inicializar o meu notbook em modo legacy, o pen drive foi reconhecido e houve o boot do sistema codificado sem a necessidade de comandos a mais, para esses dois primeiros módelos de código.

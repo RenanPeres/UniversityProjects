@@ -1,0 +1,261 @@
+
+ MbrCmd - Mater Book Record Command interpreter
+ ==============================================
+
+ The contents of this directory are part of soii21-rh_OS,
+ Copyright (c) 2021, Hiago de Franco Moreira <https://github.com/hiagofranco>
+ Copyright (c) 2021, Renan Peres Martins <https://github.com/RenanPeres>
+
+ This piece of software is a derivative work of SYSeg, by Monaco F. J.
+ SYSeg is distributed under the license GNU GPL v3, and is available
+ at the official repository https://www.gitlab.com/monaco/syseg.
+
+
+ Overview
+ ------------------------------
+
+ MbrCmd is a very simple command line interpreter that fits entirely within
+ the 512-byte master boot record of a USB stick. It is meant to be loaded
+ through legacy BIOS boot method and execute in real mode on any x86 platform.
+
+ The program interprets a few built in commands.
+
+ Challenge
+ ------------------------------
+
+ 1) Build and execute MbrCmd under a x86 emulator (e.g. qemu).
+
+ 2) Copy the program to a USB stick and boot it with BIOS legacy mode.
+
+ 3) Implement a new command exploring other BIOS services.
+
+    E.g. use BIOS interrupt service 0x12 to report the computer's memory size,
+    of 0x1a to read the system time, or any other cool feature you can
+    think of.
+
+    Consult reference (1) by the end of this file and related online sources.
+
+    Tip: you may get rid of built in commands implemented in the example
+    code if you run out of space for your own commands. Rememer, your binary
+    must fit in 512 bytes (not kbytes!) --- actually, 510 bytes if we count
+    out the boot signature (so, hands on bit twiddling.) 
+
+
+ Directions for the exercise
+ ------------------------------
+
+ Under this directory, invoke the make rule
+
+   make pack
+
+ This should create a tarball containing the project files.
+ Copy it to your own project tree and uncompress the tarball.
+
+ To complete the programming exercise, proceed as indicated
+ in both this file and in the example source code.
+
+ If applicable, please edit either the supplied build scripts.
+
+
+  Please, *do not* forget to
+
+    - fill in file AUTHORS with the pertinent information
+    - edit heading comments in all source files with your data
+
+  Open Source literacy time:
+
+  Remember: authorship and copyright of your source code should be
+  assigned to you, the author, not to SYSeg. Nevertheless,
+  being it a derivative work, credits are due to SYSeg
+  author --- therefore, make sure the proper attribution is
+  included along with the copyright notice. Also, bear in mind
+  that the SYSeg's licence requires that your derivative
+  work to be distributed under not-less restrictive terms --- if
+  in doubt, conserve the same license.
+
+  One way to claim copyright and attribute credits is adding the
+  following notice at the top of every source file of your work
+  (e.g. if keeping the original SYSeg license):
+
+     Copyright (c) <CURRENT-YEAR>, <YOUR-NAME> 
+
+     This piece of software is a derivative work of SYSeg,
+     by Monaco F. J.. SYSeg is distributed under the license
+     <GNU GPL vr.3>, and is available at <http://gitlab.com/monaco/syseg>.
+
+    This file is part of <YOUR-WORK>.
+
+    <YOUR-WORK> is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+   
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+   
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+
+
+ Happy hacking! 
+ 
+                                  
+
+
+
+ APPENDIX A
+ ------------------------------
+ 
+
+ Conveniency rules from MakeBintools
+
+ The following excerpt of code was copied from MakeBintools,
+ part of SYSeg, Copyright 2001 Monaco F. J..
+ MakeBintools is a collection of handy 'GNU make' rules for
+ inspecting and comparing the contents of source and object files.
+ Further information: http://gitlab.com/monaco/syseg
+
+
+ BUILD INSTRUCTIONS
+ 
+
+ * For buiding and inspecting, use
+
+   make					     Build the default target.
+
+   make foo				     Build foo.
+
+   make diss IMG=foo 			     Disassemble foo.
+
+   	     	     			     Optionally,
+
+					        ASM  = intel | att  (default)
+						BIT  =    16 | 32   (default)
+
+   make dump IMG=foo			     Show the raw contents of foo.
+   
+   make      			             Build everything (or make all)
+
+   make clean			             Undo make all
+
+   make diff foo bar baz		     Show graphical diff between files
+
+   	     	     			     ASM and BIT variables apply
+
+
+  * If any example involves the manipulation of a bootable image, use
+  
+
+   make run IMG=foo	             	     Test foo (MBR) in the emulator
+
+   make run-fd IMG=foo  		     Test foo (floppy) in the emulator
+
+   make iso IMG=foo	             	     build an iso9660 image with foo
+
+   make stick IMG=foo STICK=/dev/sdX         make a bootable USB stick
+
+
+   SHORTCUTS
+
+   make foo/diss			     disassemble .text as 32-bit AT&T
+   make foo/d				     same as foo/diss  (also bellow)
+
+   make foo/diss intel|att		     disassemble as 32-bit Intel or AT&T
+   make foo/diss 16|32			     disassemble as 16-bit or 32-bit
+   make foo/diss intel|att 16|32	     disassemble as Intel|AT&T 16|32 bit
+   make foo/diss 16|32 intel|att	     disassemble as Intel|AT&T 16|32 bit
+
+   make foo/i16	       			     disassemble as Intel 16-bit
+   make foo/a16 or foo/16  		     disassemble as AT&T  16-bit
+   make foo/a32	of foo/32 or foo/a     	     disassemble as AT&T  32-bit
+   make foo/i32	          or foo/i	     disassemble as Intel 32-bit
+
+   		   			     In all disassembly rules, a
+					     trailing '*' means disassemble all
+					     sections, e.g. foo/d* foo/16* ...
+
+   make foo/dump			     show raw contents in hexadecimal
+
+   make foo/run				     test foo (mbr) with the emulator
+   make foo/fd				     test foo (floppy) with the emulator
+
+ FILE NAMES
+
+ Some examples allow alternative build recipes which can be selected
+ by passing the command-line variable ALT=<number> to 'make'. See bellow. 
+
+ File names:
+
+     eg-00.ext		contain the main examples;
+     egx-00.ext		contain auxiliary extra examples.
+
+ File extensions:
+
+     hex		ASCII file containing values
+     			in hexadecimal representation;
+
+     asm		manually written assembly code in
+     			Intel ASM format;
+
+     S			manually written assembly code
+     			in AT&T Gas format;
+
+     s			assembly code in AT&T Gas format
+     			generated by the compiler (GCC);
+
+     o			object code produced by the assembler;
+
+     bin		binary file generated by the
+     			compiler /linker;
+
+     ld			linker script.
+
+
+
+ NOTE ON BOOTING THE REAL HARDWARE
+
+    If any example involves booting from a USB stick, mind following note.
+
+    Unfortunately, not all BIOSes  handle USB boot devices in the same
+    way (welcome to system level). Some are likely to emulate it as a floppy
+    disk and rely on the original IBM PC boot method we are exploring here.
+    If so, you should be able to prepare your stick using 'make stick'
+    with the command line variable IMG=foo.bin. Otherwise, if your computer's
+    BIOS emulates your USP stick as a CD-ROM, you should be better served
+    by passing it the variable IMG=foo.iso.  
+
+
+ WORDS OF WISDOM
+
+    If you plan to boot the examples in the physical hardware, check which
+    device represents your USB stick. You may use, for instance lsblk utility.
+    Your devices should possibly list as /dev/sdX, with X being a, b, c etc.
+
+    If you have only one storage device, say your HD, it may appear as
+    /dev/sda, and when you plug your USB stick, it'll take the next
+    available letter and appears as /dev/sdb.  You should be required
+    administrative privileges (sudo) to write directly into your device.
+
+    Be careful: you're entering system-level. 
+
+    If you misspell your stick as /dev/hda, you may end up grieving in
+    pitiful misery and hopeless regrets... do not lower your guard.
+
+    Note: in some systems, storage device may also appear as /dev/mmcblk;
+    e.g. /dev/mmcblk0p1 is the first partition of the device mmcklk0.
+
+  --- End of MakeBintools
+
+
+
+
+ NOTES
+ ------------------------------
+
+ (1) BIOS interrupt calls, https://en.wikipedia.org/wiki/BIOS_interrupt_call
+ 
