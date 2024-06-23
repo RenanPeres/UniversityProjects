@@ -1,9 +1,9 @@
 # university-projects
 
-##Description:
+## Description:
 This repository contains a collection of projects, assignments, and coursework completed during my time at university. It includes work from various subjects and disciplines, showcasing my academic growth and practical skills. The repository is organized by semester and course, providing a comprehensive overview of my academic journey.
 
-##Content
+## Content
 - Introduction to Computer Science
 - SSC0661 -> Computer Network
 - SSC0740 -> Operations System I
